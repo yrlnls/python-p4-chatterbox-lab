@@ -57,6 +57,7 @@ class TestApp:
 
             h = Message.query.filter_by(body="Hello 👋").first()
             assert(h)
+            assert(h.created_at is not None)
 
             db.session.delete(h)
             db.session.commit()
@@ -90,6 +91,11 @@ class TestApp:
         with app.app_context():
 
             m = Message.query.first()
+            if not m:
+                m = Message(body="Temp", username="Test", created_at=datetime.utcnow())
+                db.session.add(m)
+                db.session.commit()
+
             id = m.id
             body = m.body
 
@@ -136,7 +142,9 @@ class TestApp:
 
             hello_from_liza = Message(
                 body="Hello 👋",
-                username="Liza")
+                username="Liza",
+                created_at=datetime.utcnow()
+            )
             
             db.session.add(hello_from_liza)
             db.session.commit()

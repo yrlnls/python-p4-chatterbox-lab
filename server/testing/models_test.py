@@ -22,7 +22,9 @@ class TestMessage:
 
             hello_from_liza = Message(
                 body="Hello 👋",
-                username="Liza")
+                username="Liza",
+                created_at=datetime.utcnow()
+            )
             
             db.session.add(hello_from_liza)
             db.session.commit()
